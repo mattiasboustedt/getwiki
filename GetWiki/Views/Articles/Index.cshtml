@@ -1,0 +1,62 @@
+﻿@model IEnumerable<GetWiki.Models.Article>
+
+@{
+    ViewBag.Title = "All Articles";
+}
+
+<h2>All Articles</h2>
+
+<section>
+    <p>Filter articles to display by clicking a Category below. (Only categories that contain articles are showed.)</p>
+    <div class="row">
+        <div class="col-lg-12">
+            <ul class="skills-collection text-muted">
+                <li>@Html.ActionLink("Show all", "Index", new { searchString = "" }, new { @class = "skill-item" })</li>
+
+                    @foreach (GetWiki.Models.Category c in ViewBag.Category)
+                    {
+                        if (c.Articles.Count > 0)
+                        {
+                            <li>@Html.ActionLink(c.CategoryName, "Index", new { searchString = c.CategoryName }, new { @class = "skill-item" })</li>
+                        }
+                    }
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section>
+    <table class="table">
+        <tr>
+            <th>
+                Link to Wikipedia
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                Category
+            </th>
+            <th>Controls</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a href='http://en.wikipedia.org/?curid=@item.WikiArticleId' target="_blank">@Html.DisplayFor(modelItem => item.WikiArticleId)</a></td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                </td>
+                <td>
+                    @Html.ActionLink("Read Article", "Details", new { id = item.ArticleID }) |
+                    @Html.ActionLink("Edit Category", "Edit", new { id = item.ArticleID })
+                </td>
+            </tr>
+        }
+
+    </table>
+</section>

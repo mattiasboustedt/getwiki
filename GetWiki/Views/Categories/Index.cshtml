@@ -1,0 +1,31 @@
+﻿@model IEnumerable<GetWiki.Models.Category>
+
+@{
+    ViewBag.Title = "Manage Categories";
+}
+
+<h2>Manage Categories</h2>
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-default" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Category
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CategoryName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CategoryID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CategoryID })
+        </td>
+    </tr>
+}
+
+</table>

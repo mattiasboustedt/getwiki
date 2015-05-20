@@ -1,0 +1,47 @@
+﻿@model IEnumerable<GetWiki.Models.Article>
+
+@{
+    ViewBag.Title = "Your 10 random articles";
+}
+
+<h2>Your 10 random articles.</h2>
+
+<p>
+    Your ten randomly selected articles from Wikipedia are displayed below. <br />
+</p>
+@Html.ActionLink("Get ten more", "GetRandomArticles", "Articles", null, new { @class = "btn btn-default extra-margin-bottom" })
+@Html.ActionLink("See all articles", "Index", "Articles", null, new { @class = "btn btn-default extra-margin-bottom" })
+<table class="table">
+    <tr>
+        <th>
+            Link to Wikipedia
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            Category
+        </th>
+        <th>Controls</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <a href='http://en.wikipedia.org/?curid=@item.WikiArticleId' target="_blank">@Html.DisplayFor(modelItem => item.WikiArticleId)</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.CategoryName)
+            </td>
+            <td>
+                @Html.ActionLink("Read Article", "Details", new { id = item.ArticleID }) |
+                @Html.ActionLink("Edit Category", "Edit", new { id = item.ArticleID })
+            </td>
+        </tr>
+    }
+
+</table>

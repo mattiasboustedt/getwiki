@@ -1,0 +1,63 @@
+﻿@model GetWiki.Models.Article
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Article</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ArticleID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CategoryID, "Select a Category", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+
+                @Html.DropDownList("CategoryID", null, htmlAttributes: new { @class = "form-control", @id ="categoryList" })
+                @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" /> <br /> <br />
+                @Html.ActionLink("Create new Category", "Create", "Categories", null, new { @class = "btn btn-default" })
+            </div>
+        </div>
+
+    </div>
+
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+<!-- Add extra DropDownList value. Select it when no category is chosen -->
+<script>
+    $(function () {
+
+        $("#categoryList").prepend($("<option />").val(null).html("-- No Category --"));
+        var category = '@Model.CategoryID';
+
+        if (category == "") {
+            $("#categoryList").val($("#target option:first").val());
+        }
+    })
+</script>

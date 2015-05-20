@@ -1,0 +1,37 @@
+﻿@model GetWiki.Models.Article
+
+@{
+    ViewBag.Title = "Details";
+}
+<body>
+    <h2>@Html.DisplayFor(model => model.Title)</h2>
+
+    <div id="articleWrapper">
+        <section id="currentArticle">
+        </section>
+    </div>
+    <p>
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    <!-- Custom JS to fetch article content -->
+    <script src="~/Scripts/custom.js"></script>
+
+    <!-- Load article content when page is loaded -->
+    <script>
+        $(document).ready(function () {
+
+            //Creates the URL used to fetch the article to display.
+            //Article is fetched by using its unique WikiArticleId.
+
+            var searchString = "@Html.DisplayFor(model => model.WikiArticleId)";
+            var fullUrl = 'http://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&pageids=' + encodeURI(searchString) + '&callback=?';
+
+            getArticleContent(fullUrl);
+        })
+    </script>
+
+</body>
